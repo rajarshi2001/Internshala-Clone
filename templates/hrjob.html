@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Hr Portal
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row">
+            {% if jb1 %}
+            {% for j in jb1 %}
+            <div class="col-12 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center"><i>{{j.title}}</i></h2>
+                        <p class="text-center"><i>{{j.skills}}</i></p>
+                        <p class="text-center"><i>Duration: {{j.duration}} months</i></p>
+                        <p class="text-center"><i>Activities: {{j.activities}}</i></p>
+                        <p class="text-center"><i>Amount You offered(in Rs): {{j.amount}}</i></p>
+                        <p class="text-center"><i>Perks offerd: {{j.perks}}</i></p>
+
+                        <div class="text-center">
+                            <a href="{% url 'editjob' j.id %}" class="btn btn-primary w-100 my-2">Edit</a>
+                            <form action="{% url 'hrJobs' j.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete" class="btn btn-danger w-100 my-2">
+                            </form>
+                            {% if ap %}
+                                <a href="{% url 'allstatus' j.id %}" class="btn btn-outline-success w-100 my-2">Application status</a>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                <h2 class="text-center">No jobs posted by you</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

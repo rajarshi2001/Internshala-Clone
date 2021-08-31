@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Company Dashboard
+{% endblock title %}
+
+
+{% block content %}
+<div class="container my-3">
+    {% if ct %}
+        <h2 class="text-center alert alert-danger"> <i> Welcome HR of {{ct.name}} </i></h2>
+    {% else %}
+        <h2 class="text-center">Welcome</h2>
+    {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            {% if ct %}
+            <li class="list-group-item text-center"> <a href="#" class="text-decoration-none btn btn-info w-100 ">Edit
+                    Company</a></li>
+            <li class="list-group-item text-center">
+                <a class="text-decoration-none btn btn-success w-100" href="{% url 'user_profile' ct.id %}">Company
+                    Profile</a>
+            </li>
+            {% else %}
+            <li class="list-group-item text-center" aria-current="true "> <a href="{% url 'user_dashboard' %}"
+                    class="text-decoration-none btn btn-primary w-100 ">Add Company</a></li>
+            {% endif %}
+
+
+        </div>
+        <div class="col-12 col-lg-8">
+            <form action="" method="POST" novalidate>
+                {% if ct %}
+                <h2 class="text-center alert alert-info">Edit Company</h2>
+                {% else %}
+                <h2 class="text-center alert alert-danger">Add Company</h2>
+                {% endif %}
+                {% csrf_token %}
+                {% for fm in forms %}
+                <p>{{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small></p>
+                {% endfor %}
+                <div class="text-center">
+                    {% if ct %}
+                    <input type="submit" class="btn btn-outline-primary w-100 my-3" value="Edit Company">
+                    {% else %}
+                    <input type="submit" class="btn btn-outline-success w-100 my-3" value="Add Company">
+                    {% endif %}
+                </div>
+            </form>
+            {% if forms.non_field_errors %}
+            {% for error in forms.non_field_errors %}
+            <p class="alert alert-danger my-3">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

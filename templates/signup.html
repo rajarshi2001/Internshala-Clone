@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Sign Up
+{% endblock title %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row my-2">
+        <div class="col-12 col-lg-6">
+            <img src="{% static 'app/images/job-portal-lead.jpg' %}" alt="img" class="img-fluid h-100">
+        </div>
+        <div class="col-12 col-lg-6">
+            <form action="" method="POST" class="shadow p-3" novalidate>
+                <h2 class="text-center alert alert-success">Sign Up here</h2>
+                {% if messages %}
+                {% for message in messages %}
+                <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                <select class="form-select form-control" aria-label="Default select example" name="postname">
+                    <option selected>Choose Option</option>
+                    <option value="Participant">Participant</option>
+                    <option value="Hr">Hr</option>
+                  </select>
+                  <br>
+                {% for fm in forms %}
+                <p>{{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small></p>
+                {% endfor %}
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-success w-100">
+                </div>
+            </form>
+            {% if forms.non_field_errors %}
+            {% for error in forms.non_field_errors %}
+            <p class="alert alert-danger my-3">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

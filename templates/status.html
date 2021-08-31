@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Application Status
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container my-3">
+        <h2 class="text-center alert alert-danger"><i>See all the applications</i></h2>
+        <div class="row">
+            {% if ap %}
+            {% for a in ap %}
+            <div class="col-12 col-lg-12">
+               
+                <div class="card my-2">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{a.cd.pro_img.url}}" alt="img" class="imagecand img-fluid img-thumbnail">
+                        </div>
+                        <h5 class="text-center"><i>Applied by: {{a.cd.stud_name}}</i></h5>
+                        <p class="text-center"> <i> Contact No: {{a.cd.mobile}}</i></p>
+                        <p class="text-center"><i>Class 10(aggregate): {{a.cd.class_10}}%, Class 12(aggregate): {{a.cd.class_12}}%</i></p>
+                        <p class="text-center"><i>Current Course Persuing: {{a.cd.persuing}} </i> </p>
+                        <p class="text-center"><i>Aim: {{a.objective}}</i></p>
+                        <p class="text-center"><i>Why to join: <strong>{{a.reason}}</strong> </i></p>
+                        <p class="text-center"><a href="{{a.cd.cv.url}}">Resume: <strong>{{a.cd.cv}}</strong></a></p>
+
+                        <div class="text-center">
+                            {% if a.status1 == True %}
+                                <p class="text-center alert alert-danger">Sucessfully sent</p>
+                            {% else %}
+                           <a href="{% url 'acceptance' a.id %}" class="btn btn-success">Accept Application</a>
+                            
+                            <br>
+                            <br>
+                            <a href="{% url 'rejection' a.id %}" class="btn btn-danger">Reject Application</a>
+                            {% endif %}
+                        </div>
+                    </div>
+             
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                <h2 class="text-center">No applications sent</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

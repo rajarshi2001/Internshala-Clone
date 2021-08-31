@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Apply Internship
+{% endblock title %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <form action="" method="POST" class="shadow p-3" novalidate>
+                    <h2 class="text-center alert alert-danger">Please fill in the details</h2>
+                    {% csrf_token %}
+                    {% for fm in forms %}
+                    <p>{{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small></p>
+                    {% endfor %}
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-danger w-100 my-3" value="Confim and Apply">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{myjob.comp.name}}
+{% endblock title %}
+
+{% block content %}
+    <div class="container my-3">
+        {% if messages %}
+        {% for message in messages %}
+        <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+        {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                {% if myjob %}
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h2 class="text-center"> <u> <i> {{myjob.comp.name}}</i></u></h2>
+                        <br>
+                        <h3 class="text-center"> <i> <u> Post:</u> <strong>{{myjob.title}}</strong></i></h3>
+                        <br>
+                        <h3 class="text-center"> <i> <u> Skills Needed:</u> <strong>{{myjob.skills}}</strong></i></h3>
+                        <br>
+                        <h3 class="text-center"> <i> <u>Duration:</u>  <strong>{{myjob.duration}} months</strong></i></h3>
+                        <br>
+                        <h3 class="text-center"> <i> <u> Day to day activities:</u> <strong>{{myjob.activities}}</strong></i></h3>
+                        <br>
+                        <h3 class="text-center"><i><u>Perks:</u> {{myjob.perks}}</i></h3>
+                        <br>
+                        <h3 class="text-center"><i><u>Amount to be paid(in Rupees):</u> {{myjob.amount}}</i></h3>
+
+                    
+                        <div class="text-center my-3">
+                            {% if not ap %}
+                                <a href="{% url 'applyjob' myjob.id %}" class="btn btn-success my-3 w-100">Apply for internship</a>
+                            {% else %}
+                                {% if ac1 %}
+                                    {% if ac1.done == True %}
+                                    <h4 class="alert alert-success">Congratulations!! your appplication has been approved, you will get a mail shortly</h4>
+                                    {% else %}
+                                    <h4 class="alert alert-primary">Sorry!! Your application is rejected</h4>
+                                    {% endif %}
+                                {% else %}
+                                <h4 class="alert alert-primary">Application Submitted</h4>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <h2 class="text-center">No Jobs posted currently</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

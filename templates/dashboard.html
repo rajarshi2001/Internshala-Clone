@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="container my-3">
+    <h2 class="text-center alert alert-danger">Check all the companies here </h2>
+    <div class="row">
+        {% for cmp in comp %}
+        <div class="col-12 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title shadow border border-danger">
+                        <h4 class="text-center alert alert-outline-danger">{{cmp.name}}</h4>
+                    </div>
+                    <p class="text-danger"><i>{{cmp.desc}}</i></p>
+                    {% if cd %}
+                    <a href="{% url 'job' cmp.id %}" class="btn btn-outline-primary w-100">Check all posts</a>
+                    {% else %}
+                        <a href="{% url 'profile' %}" class="btn btn-outline-danger w-100">Make your Profile</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}

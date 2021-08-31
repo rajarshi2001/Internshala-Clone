@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Jobs
+{% endblock title %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row">
+            {% if alljobs %}
+            {% for job in alljobs %}
+            <div class="col-12 col-lg-4">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h4 class="text-center">{{job.title}}</h4>
+                        <p class="text-center text-danger">Payable Amount(in Rupees): <strong>{{job.amount}}</strong></p>
+                        <p class="text-center text-danger">Duration of Internship: <strong>{{job.duration}} months</strong></p>
+                        <div class="text-center">
+                            <a href="{% url 'viewjob' job.id %}" class="btn btn-success">  View Details</a>
+                        </div>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                <h2 class="text-center">No Jobs posted by the company yet</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

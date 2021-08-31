@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <ul class="list-group">
+                {% if not ct %}
+                <li class="list-group-item text-center" aria-current="true "> <a href="{% url 'profile' %}"
+                        class="text-decoration-none btn btn-primary w-100 ">Add Profile</a></li>
+                {% else %}
+                <li class="list-group-item text-center"> <a href="{% url 'editProfile' %}"
+                        class="text-decoration-none btn btn-info w-100 ">Edit Profile</a></li>
+                <li class="list-group-item text-center"> <a href="{% url 'viewProfile' ct.stud_name %}"
+                        class="text-decoration-none btn btn-success w-100">View Profile</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-12 col-lg-8">
+            {% if name %}
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center alert alert-danger">Your Profile</h2>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="text-center">
+                                    <img src="{{ct.pro_img.url}}" alt="img" class="img-fluid candidateImg">
+                                    <h4 class="text-dark my-3"><i>Resume: <strong> <a href="{{ct.cv.url}}">{{ct.cv}}</a> </strong></i> </h4>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h4 class="text-dark my-2 text-center"><i>Candidate Name: <strong>{{ct.stud_name}}</strong></i> </h4>
+                                <h4 class="text-dark my-3 text-center"><i>Address: <strong>{{ct.address}}</strong></i> </h4>
+                                <h4 class="text-dark my-2 text-center"><i>Contact: <strong>{{ct.mobile}}</strong></i> </h4>
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <h4 class="text-dark my-2 text-center"><i>Marks in class 10: <strong>{{ct.class_10}}%</strong></i> </h4>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <h4 class="text-dark my-2 text-center"><i>Marks in class 12: <strong>{{ct.class_12}}%</strong></i> </h4>
+                                    </div>
+                                    <h4 class="text-dark my-2 text-center"><i>Persue Course: <strong>{{ct.persuing}}</strong></i> </h4>
+                                    {% if ct.experience %}
+                                        <h4 class="text-dark text-center"><i>Experience: <strong>{{ct.experience}}</strong></i> </h4>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+            <form action="" method="POST" class="shadow p-3" novalidate enctype="multipart/form-data">
+                {% if messages %}
+                {% for message in messages %}
+                <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                {% if name1 %}
+                <h2 class="text-center alert alert-danger">Edit Your Profile</h2>
+                {% else %}
+                    <h2 class="text-center alert alert-danger">Add Your Profile</h2>
+                {% endif %}
+                {% csrf_token %}
+                {% for fm in forms %}
+                <p>{{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small></p>
+                {% endfor %}
+                {% if name1 %}
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-danger w-100" value="Edit Profile">
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-success w-100" value="Add Profile">
+                </div>
+                {% endif %}
+            </form>
+            {% if forms.non_field_errors %}
+            {% for error in forms.non_field_errors %}
+            <p class="alert alert-danger my-3">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
